@@ -21,8 +21,8 @@ wso2::service_name: wso2esb
 wso2::hostname : esb.wso2.com
 wso2::mgt_hostname : esb.wso2.com
 
-#wso2::file_list :
-#  - repository/components/lib/mysql-connector-java-5.1.38.jar
+wso2::file_list :
+  - repository/components/lib/mysql-connector-java-5.1.38.jar
 
 #wso2::template_list :
 #  - repository/conf/security/cipher-text.properties
@@ -92,8 +92,10 @@ wso2::secure_vault_configs :
 # defined for servlet HTTP and HTTPS transport in K8s Service definition
 wso2::ports:
   proxyPort :
-    http: 32003
-    https: 32004
+    http: 80
+    https: 443
+  offset : "%{::product_offset}"
+
 
 # Defines WSDL EPR Prefix
 wso2::esb_wsdl_epr_prefix:

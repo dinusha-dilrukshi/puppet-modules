@@ -16,23 +16,70 @@ wso2::clustering :
     enabled : true
     local_member_host : local.esb.wso2.com
     local_member_port : 4000
-    #membership_scheme : wka
-    membership_scheme : kubernetes
+    membership_scheme : wka
+#    membership_scheme : kubernetes
     sub_domain : worker
-    #wka :
-    #   members :
-    #     -
-    #      hostname : 192.168.100.10
-    #       port : 4000
-    #     -
-    #      hostname : 192.168.100.20
-    #       port : 4000
-    k8 :
-       k8_master : http://172.17.8.101:8080
-       k8_namespace : default
-       k8_services : wso2esb-manager,wso2esb-worker
-       k8_master_username :
-       k8_master_password :
+    wka :
+       members :
+         -
+          hostname : 192.168.88.16
+           port : 4001
+         -
+          hostname : 192.168.88.16
+           port : 4002
+#    k8 :
+#       k8_master : http://172.17.8.101:8080
+#       k8_namespace : default
+#       k8_services : wso2esb-manager,wso2esb-worker
+#       k8_master_username :
+#       k8_master_password :
+
+wso2::master_datasources :
+
+  wso2_gov_db :
+    name : WSO2_REG_DB
+    description : The datasource used for gov registry
+    driver_class_name : com.mysql.jdbc.Driver
+    url : jdbc:mysql://192.168.58.239:3306/REG_DB?autoReconnect=true
+    username : root
+    password : root
+    jndi_config : jdbc/WSO2_REG_DB
+    max_active : "%{hiera('wso2::datasources::common::max_active')}"
+    max_wait : "%{hiera('wso2::datasources::common::max_wait')}"
+    test_on_borrow : "%{hiera('wso2::datasources::common::test_on_borrow')}"
+    validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
+    default_auto_commit : "%{hiera('wso2::datasources::common::default_auto_commit')}"
+    validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
+
+#  wso2_config_db :
+#    name : WSO2_CONFIG_DB
+#    description : The datasource used for config registry
+#    driver_class_name : com.mysql.jdbc.Driver
+#    url : jdbc:mysql://192.168.58.239:3306/REG_DB?autoReconnect=true
+#    username : root
+#    password : root
+#    jndi_config : jdbc/WSO2_REG_DB
+#    max_active : "%{hiera('wso2::datasources::common::max_active')}"
+#    max_wait : "%{hiera('wso2::datasources::common::max_wait')}"
+#    test_on_borrow : "%{hiera('wso2::datasources::common::test_on_borrow')}"
+#    default_auto_commit : "%{hiera('wso2::datasources::common::default_auto_commit')}"
+#    validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
+#    validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
+
+  wso2user_db :
+    name : WSO2USER_DB
+    description : The datasource is used for user mangement and userstore
+    driver_class_name : com.mysql.jdbc.Driver
+    url : jdbc:mysql://172.17.8.1:3306/WSO2USER_DB?autoReconnect=true
+    username : root
+    password : root
+    jndi_config : jdbc/WSO2USER_DB
+    max_active : "%{hiera('wso2::datasources::common::max_active')}"
+    max_wait : "%{hiera('wso2::datasources::common::max_wait')}"
+    test_on_borrow : "%{hiera('wso2::datasources::common::test_on_borrow')}"
+    default_auto_commit : "%{hiera('wso2::datasources::common::default_auto_commit')}"
+    validation_query : "%{hiera('wso2::datasources::mysql::validation_query')}"
+    validation_interval : "%{hiera('wso2::datasources::common::validation_interval')}"
 
 #wso2::registry_mounts:
 #  wso2_config_db:
@@ -41,13 +88,21 @@ wso2::clustering :
 #    read_only: true
 #    registry_root: /
 #    enable_cache: true
-#
-#  wso2_gov_db:
-#    path: /_system/governance
-#    target_path: /_system/governance
-#    read_only: true
-#    registry_root: /
-#    enable_cache: true
+
+  wso2_gov_db:
+      path1: /_system/governance
+      target_path1: /_system/governance
+      path2: /_system/config
+      target_path2: /_system/config
+      read_only: true
+      registry_root: /
+      enable_cache: true
+
+
+wso2::usermgt_datasource: wso2user_db
+
+wso2::ports:
+  offset : "%{::product_offset}"
 
 wso2::dep_sync :
     enabled : false
