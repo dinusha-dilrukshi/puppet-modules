@@ -59,14 +59,14 @@ class wso2base::system (
     }
   }
 
-  if $vm_type != 'docker' {
-    file { "/etc/hosts":
-      ensure               => present,
-      owner                => $wso2_user,
-      group                => $wso2_group,
-      mode                 => '0755',
-      content              => template("${hosts_template}"),
-    }
-  }
+  # if $vm_type != 'docker' {
+  #   file { "/etc/hosts":
+  #     ensure               => present,
+  #     owner                => $wso2_user,
+  #     group                => $wso2_group,
+  #     mode                 => '0755',
+  #     content              => template("${hosts_template}"),
+  #   }
+  # }
 
 }

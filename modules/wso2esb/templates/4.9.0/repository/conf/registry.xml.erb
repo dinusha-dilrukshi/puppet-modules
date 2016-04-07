@@ -43,11 +43,11 @@
         <enableCache><%= registry_mount['enable_cache'] %></enableCache>
         <cacheId><%= @master_datasources[datasource_name]['username'] %>@<%= @master_datasources[datasource_name]['url'] %></cacheId>
     </remoteInstance>
-    <mount path="<%= registry_mount['path1'] %>" overwrite="virtual">
+    <mount path="<%= registry_mount['path1'] %>" overwrite="true">
         <instanceId><%= @master_datasources[datasource_name]['name'] %></instanceId>
         <targetPath><%= registry_mount['target_path1'] %></targetPath>
     </mount>
-    <mount path="<%= registry_mount['path2'] %>" overwrite="virtual">
+    <mount path="<%= registry_mount['path2'] %>" overwrite="true">
         <instanceId><%= @master_datasources[datasource_name]['name'] %></instanceId>
         <targetPath><%= registry_mount['target_path2'] %></targetPath>
     </mount>
